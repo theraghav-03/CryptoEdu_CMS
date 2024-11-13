@@ -1,22 +1,20 @@
 <?php 
 require('connect.php'); 
+session_start();
+if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: login.php");
+    exit;
+}
 require('header.php');
 
-echo "Crypto-Edu"; 
-
-require('footer.php');
+// echo "Crypto-Edu"; 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div id="crypto-info"></div>
+<main>
+    <h1>Crypto-Edu</h1>
+    <p>Welcome to Crypto-Edu where you can learn everything you want to know about cryptocurrency and blockchain industry as a fresher ! </p>
+</main>
     
-</body>
-<script src="script.js"></script>
-</html>
+<?php include('footer.php'); ?>
+
+

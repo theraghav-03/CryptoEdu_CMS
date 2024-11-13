@@ -1,4 +1,3 @@
-
 const apiKey = "coinranking1e8e692a0bb989ddc76121d0320703d981bc91a5faa21ff3"; 
 const url = "https://api.coinranking.com/v2/coins";
 
@@ -29,7 +28,7 @@ function dropdown(cryptoData) {
     });
  
 
-     displayCoinInfo(cryptoData[0]);
+    //  displayCoinInfo(cryptoData[0]);
 
             // Add event listener for selection changes
             dropdown.addEventListener("change", () => {
@@ -41,14 +40,12 @@ function dropdown(cryptoData) {
 
         function displayCoinInfo(coin) {
             const infoDiv = document.getElementById("crypto-info");
-            // const usdQuote = coin.price ? coin.price : { price: 0, marketCap: 0, volume24h: 0 };
-        
             infoDiv.innerHTML = `
                 <h2>${coin.name} (${coin.symbol})</h2>
-                <p>Price: $${coin.price}</p>
+                <p>Price:  $${Math.round(coin.price)}</p>
                 <p>Market Cap: $${coin.marketCap.toLocaleString()}</p>
                 <p>Date listed: ${new Date(coin.listedAt * 1000).toLocaleDateString()}</p>
                 <p>Rank: ${coin.rank}</p>
                 <a href="${coin.coinrankingUrl}" target="_blank">Visit Website</a>
             `;
-        }
+        }    
