@@ -1,6 +1,9 @@
 <?php
 require('connect.php');
+require('header.php');
+require('config.php');
 $login=false;
+
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -14,12 +17,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $statement->bindParam(':password', $password);
         $statement->execute();
 
-        $num= $statement->rowCount();
-        if($num == 1) {
+        // $num= $statement->rowCount();
+        $user = $statement->fetch();
+
+        if($user) {
             $login = true;
             session_start();
             $_SESSION['loggedin'] = true;
-            $_SESSION['email'] = $email;
+            $_SESSION['email'] = $user['$email'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role'];
             header("location: index.php");
             } else {
             echo "Error: Unable to login.";

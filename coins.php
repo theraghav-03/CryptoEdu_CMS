@@ -10,10 +10,12 @@ include('header.php');
     <title>Document</title>
 </head>
 <body>
-<select name="Coins" id="coins">
-<option value="">Coins</option>
-</select>
-<div id="crypto-info"></div>
+<h1>Crypto-Edu</h1>
+    <label for="coins">Select coin name from dropdown for more info</label>
+    <select name="Coins" id="coins">
+    <option value="">Coins</option>
+    </select>
+    <div id="crypto-info"></div>
 </body>
 <script src="script.js"></script>
 </html>

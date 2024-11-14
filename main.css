@@ -1,0 +1,31 @@
+main {
+    text-align: center;
+}
+nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+nav ul {
+    list-style-type: none;
+    display: flex;
+}
+nav ul li a {
+    color: black;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+li {
+    color: black;
+    list-style-type: none;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #f2f2f2;
+    color: black;
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+}
