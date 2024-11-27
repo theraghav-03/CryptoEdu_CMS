@@ -35,6 +35,7 @@ require('header.php');
         <!-- <button><a href="edit.php?id=<?= ($post['id']) ?>">Edit</a></button> -->
         <button><a href="index.php">Done</a></button>
      </div>
+     <?php include('comment.php'); ?>
 </body>
 </html>
 <?php include('footer.php'); ?>

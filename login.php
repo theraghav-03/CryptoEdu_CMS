@@ -1,7 +1,7 @@
 <?php
 require('connect.php');
 require('header.php');
-require('config.php');
+// require('config.php');
 $login=false;
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,8 +24,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $login = true;
             session_start();
             $_SESSION['loggedin'] = true;
-            $_SESSION['email'] = $user['$email'];
+            $_SESSION['email'] = $user['email'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['role'] = $user['role'];
             header("location: index.php");
             } else {
