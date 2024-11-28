@@ -64,7 +64,7 @@ $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
         <tbody>
             <?php foreach ($posts as $post): ?>
                 <tr>
-                    <td><?= htmlspecialchars($post['title']) ?></td>
+                    <td><a href="fullpost.php?id=<?= htmlspecialchars($post['id']) ?>"><?= htmlspecialchars($post['title']) ?></a></td>
                     <td><?= htmlspecialchars($post['date_added']) ?></td>
                 </tr>
             <?php endforeach; ?>
