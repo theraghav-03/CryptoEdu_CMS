@@ -19,6 +19,10 @@
                     <li><a href="Signup.php">Sign up</a></li>
                     <li><a href="logout.php">Logout</a></li>
                 </ul>
+                <form action="search.php" method="GET" style="display: inline;">
+                    <input type="text" name="query" placeholder="Search leasons" required>
+                    <input type="submit" value="Search">
+                </form>
             </nav>
         </div>
     </header>
