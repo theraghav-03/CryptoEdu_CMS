@@ -69,7 +69,7 @@ $categories = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
             <?php foreach ($categories as $category): ?>
                 <tr>
                     <td>
-                        <a href="fullpost.php?category_id=<?= $category['category_id'] ?>">
+                        <a href="categoriesList.php?category_id=<?= $category['category_id'] ?>">
                             <?= htmlspecialchars($category['category_name']) ?>
                         </a>
                     </td>
