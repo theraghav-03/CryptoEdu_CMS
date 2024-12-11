@@ -10,7 +10,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Please fill in all fields.";
         exit;
     }
-     // Checking if email already exists
      $checkQuery = "SELECT * FROM users WHERE email = :email";
      $checkStatement = $db->prepare($checkQuery);
      $checkStatement->bindParam(':email', $email);

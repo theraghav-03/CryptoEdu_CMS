@@ -21,8 +21,7 @@ if ($_POST && isset($_POST['update'])) {
         } elseif (empty($category_id)) {
             $error_msg = "Please select a valid category.";
         } else {
-            $query = "UPDATE posts 
-                      SET title = :title, content = :content, category_id = :category_id, date_added = :date_added WHERE id = :id";  
+            $query = "UPDATE posts SET title = :title, content = :content, category_id = :category_id, date_added = :date_added WHERE id = :id";  
             $statement = $db->prepare($query);
             $statement->bindValue(':title', $title);
             $statement->bindValue(':content', $content);
