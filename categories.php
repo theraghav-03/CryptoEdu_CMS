@@ -3,13 +3,11 @@ require('connect.php');
 require('header.php');
 session_start();
 
-if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
-    echo "Access Denied!";
-    header("Location: login.php");
-    exit;
-}
+$isAdmin = isset($_SESSION['loggedin']) && $_SESSION['role'] === 'admin';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$message = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isAdmin) {
     $category_name = $_POST['category_name'];
 
     if (!empty($category_name)) {
@@ -38,6 +36,7 @@ $categories = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
     <title>Manage Categories</title>
 </head>
 <body>
@@ -47,27 +46,38 @@ $categories = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
         <p><?= htmlspecialchars($message) ?></p>
     <?php endif; ?>
 
-    <form method="POST">
-        <input type="hidden" name="category_id" value="<?= $_GET['edit'] ?? '' ?>">
-        <label for="category_name">Category Name:</label>
-        <input type="text" name="category_name" id="category_name" value="<?= $_GET['name'] ?? '' ?>" required>
-        <button type="submit"><?= isset($_GET['edit']) ? 'Update' : 'Add' ?> Category</button>
-    </form>
+    <?php if ($isAdmin): ?>
+        <form method="POST">
+            <input type="hidden" name="category_id" value="<?= $_GET['edit'] ?? '' ?>">
+            <label for="category_name">Category Name:</label>
+            <input type="text" name="category_name" id="category_name" value="<?= $_GET['name'] ?? '' ?>" required>
+            <button type="submit"><?= isset($_GET['edit']) ? 'Update' : 'Add' ?> Category</button>
+        </form>
+    <?php endif; ?>
 
     <h2>All Categories</h2>
     <table>
         <thead>
             <tr>
                 <th>Category Name</th>
+                <?php if ($isAdmin): ?>
+                    <th>Actions</th>
+                <?php endif; ?>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($categories as $category): ?>
                 <tr>
-                    <td><?= htmlspecialchars($category['category_name']) ?></td>
                     <td>
-                        <a href="?edit=<?= $category['category_id'] ?>&name=<?= htmlspecialchars($category['category_name']) ?>">Edit</a>
+                        <a href="fullpost.php?category_id=<?= $category['category_id'] ?>">
+                            <?= htmlspecialchars($category['category_name']) ?>
+                        </a>
                     </td>
+                    <?php if ($isAdmin): ?>
+                        <td>
+                            <a href="?edit=<?= $category['category_id'] ?>&name=<?= htmlspecialchars($category['category_name']) ?>">Edit</a>
+                        </td>
+                    <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>
