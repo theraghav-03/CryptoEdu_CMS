@@ -1,25 +1,17 @@
 <?php
+
 require('connect.php'); 
 require('header.php');
 
-function formatDate($date){
-    return date('F d, Y, h:i', strtotime($date));
-}
+    function formatDate($date){
+        return date('F d, Y, h:i', strtotime($date));
+    }
 
-// Fetch post details
-$query = "SELECT posts.*, categories.category_name 
-          FROM posts 
-          LEFT JOIN categories ON posts.category_id = categories.category_id 
-          WHERE id = :id LIMIT 1";
-$statement = $db->prepare($query); 
-$statement->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
-$statement->execute(); 
-$post = $statement->fetch();
-
-if (!$post) {
-    echo "<p>Post not found!</p>";
-    exit;
-}
+    $query = "SELECT * FROM posts where id = :id limit 1";
+    $statement = $db->prepare($query); 
+    $statement->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
+    $statement->execute(); 
+    $post= $statement->fetch();
 ?>
 
 <!DOCTYPE html>
@@ -29,17 +21,21 @@ if (!$post) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <title>CRYPTO_EDU><?= htmlspecialchars($post['title']) ?></title>
+    
+    <title>CRYPTO_EDU><?=($post['title']) ?></title>
 </head>
+<header>
+</header>
 <body>
-    <div class="post">
-        <h1><?= htmlspecialchars($post['title']) ?></h1>
-        <h3><?= htmlspecialchars($post['content']) ?></h3>
-        <p>Category: <strong><?= htmlspecialchars($post['category_name'] ?? 'Uncategorized') ?></strong></p>
-        <h4>Last updated: <?= formatDate($post['date_added']) ?></h4>
+    <!-- Remember that alternative syntax is good and html inside php is bad -->
+     <div class="post">
+        <h1><?= $post['title']?></h1>
+        <h3><?= $post['content']?></h3>
+        <h4> Last updated: <?=(formatDate($post['date_added']))?> </h4>
+        <!-- <button><a href="edit.php?id=<?= ($post['id']) ?>">Edit</a></button> -->
         <button><a href="index.php">Done</a></button>
-    </div>
-    <?php include('comment.php'); ?>
+     </div>
+     <?php include('comment.php'); ?>
 </body>
 </html>
 <?php include('footer.php'); ?>
