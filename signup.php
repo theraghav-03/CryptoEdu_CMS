@@ -2,36 +2,39 @@
 require('connect.php');
 require('header.php');
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    
     if (empty($username) || empty($email) || empty($password)) {
         echo "Please fill in all fields.";
         exit;
     }
-     $checkQuery = "SELECT * FROM users WHERE email = :email";
-     $checkStatement = $db->prepare($checkQuery);
-     $checkStatement->bindParam(':email', $email);
-     $checkStatement->execute();
- 
-     if ($checkStatement->rowCount() > 0) {
-         echo "Error: Email already exists, Try login !";
-        //  header("Location: login.php");
-         exit;
-     }
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $query = "INSERT INTO users (username, email, password , role) VALUES (:username, :email, :password , 'user')";
-        $statement = $db->prepare($query);
-        $statement->bindParam(':username', $username);
-        $statement->bindParam(':email', $email);
-        $statement->bindParam(':password', $password);
+    $checkQuery = "SELECT * FROM users WHERE email = :email";
+    $checkStatement = $db->prepare($checkQuery);
+    $checkStatement->bindParam(':email', $email);
+    $checkStatement->execute();
 
-        if($statement->execute()) {
-            echo "Sign up successful!";
-            header("Location: login.php");
-        } else {
-            echo "Error: Unable to sign up."; 
+    if ($checkStatement->rowCount() > 0) {
+        echo "Error: Email already exists, Try login!";
+        exit;
+    }
+
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    $query = "INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, 'user')";
+    $statement = $db->prepare($query);
+    $statement->bindParam(':username', $username);
+    $statement->bindParam(':email', $email);
+    $statement->bindParam(':password', $hashedPassword); // Store the hashed password
+
+    if ($statement->execute()) {
+        echo "Sign up successful!";
+        header("Location: login.php");
+        exit;
+    } else {
+        echo "Error: Unable to sign up."; 
     }
 }
 ?>
@@ -57,4 +60,3 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <p>Already have an account? <a href="login.php">Log in</a></p>
 </body>
 </html>
-   
