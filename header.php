@@ -18,6 +18,7 @@
                     <li><a href="login.php">Login</a></li>
                     <li><a href="Signup.php">Sign up</a></li>
                     <li><a href="logout.php">Logout</a></li>
+                    <li><a href="categories.php">categories</a></li>
                 </ul>
                 <form action="search.php" method="GET" style="display: inline;">
                     <input type="text" name="query" placeholder="Search leasons" required>
